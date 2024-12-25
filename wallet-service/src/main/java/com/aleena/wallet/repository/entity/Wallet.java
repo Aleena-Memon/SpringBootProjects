@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -21,7 +23,8 @@ public class Wallet {
     private String deviceId;
     private String appId;
 
-
+    @OneToMany(mappedBy = "wallet", cascade = CascadeType.ALL)
+    private List<PaymentMeans> paymentMeans;
 
 
 }

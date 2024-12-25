@@ -27,15 +27,15 @@ public class Consumer {
     @Enumerated(EnumType.STRING)
     private ConsumerType type;
 
-    @OneToMany(mappedBy = "consumer")
+    @OneToMany(mappedBy = "consumer", cascade = CascadeType.ALL)
     private List<Wallet> wallets;
 
-    @PrePersist
-    public void generateConsumerId() {
-        if (consumerId == null) {
-            consumerId = UUID.randomUUID().toString(); // Generates a unique UUID
-        }
-
-    }
+//    @PrePersist
+//    public void generateConsumerId() {
+//        if (consumerId == null) {
+//            consumerId = UUID.randomUUID().toString(); // Generates a unique UUID
+//        }
+//
+//    }
 }
 
