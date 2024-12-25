@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.util.List;
+import java.util.UUID;
 
 
 @Data
@@ -29,5 +30,12 @@ public class Consumer {
     @OneToMany(mappedBy = "consumer")
     private List<Wallet> wallets;
 
+    @PrePersist
+    public void generateConsumerId() {
+        if (consumerId == null) {
+            consumerId = UUID.randomUUID().toString(); // Generates a unique UUID
+        }
+
+    }
 }
 

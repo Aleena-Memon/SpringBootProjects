@@ -39,7 +39,7 @@ public class ConsumerController {
    @PostMapping
     public ResponseEntity<ConsumerResponse> createConsumer(@RequestBody ConsumerRequest consumerRequest){
         Consumer consumer = new Consumer(
-                "",// autoincrement
+                null,
                 consumerRequest.getUamId(),
                 consumerRequest.getName(),
                 consumerRequest.getType(),
