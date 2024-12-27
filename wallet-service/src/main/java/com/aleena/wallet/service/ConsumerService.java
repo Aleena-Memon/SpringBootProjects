@@ -22,11 +22,25 @@ public class ConsumerService {
         return consumerRepository.save(consumer);
     }
 
-    public Consumer getConsumerByWalletId(String walletId) {
-        return consumerRepository.findOne(ConsumerSpecification.findByWalletId(walletId)).orElse(null);
+    public Consumer updateConsumer(Consumer consumer) {
+        if (consumer.getConsumerId() == null || !consumerRepository.existsById(consumer.getConsumerId())) {
+            throw new IllegalArgumentException("Consumer not found for update");
+        }
+        return consumerRepository.save(consumer);
     }
 
-    public Consumer getConsumerByPaymentMeanId(String paymentMeanId) {
-        return consumerRepository.findOne(ConsumerSpecification.findByPaymentMeanId(paymentMeanId)).orElse(null);
+    public void deleteConsumer(String consumerId) {
+        if (!consumerRepository.existsById(consumerId)) {
+            throw new IllegalArgumentException("Consumer not found for deletion");
+        }
+        consumerRepository.deleteById(consumerId);
+    }
+
+    public List<Consumer> getConsumerByWalletId(String walletId){
+        return consumerRepository.findAll(ConsumerSpecification.findByWalletId(walletId));
+    }
+
+    public List<Consumer> getConsumerByPaymentMeanId(String paymentMeanId){
+        return consumerRepository.findAll(ConsumerSpecification.findByPaymentMeanId(paymentMeanId));
     }
 }

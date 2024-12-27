@@ -59,4 +59,65 @@ public class ConsumerController {
        );
        return new ResponseEntity<>(response, HttpStatus.CREATED);
    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ConsumerResponse> updateConsumer(@PathVariable String id, @RequestBody ConsumerRequest consumerRequest) {
+        Consumer consumer = new Consumer(
+                id,
+                consumerRequest.getUamId(),
+                consumerRequest.getName(),
+                consumerRequest.getType(),
+                List.of()
+        );
+
+        Consumer updatedConsumer = consumerService.updateConsumer(consumer);
+
+        ConsumerResponse response = new ConsumerResponse(
+                updatedConsumer.getConsumerId(),
+                updatedConsumer.getUamId(),
+                updatedConsumer.getName(),
+                updatedConsumer.getType(),
+                updatedConsumer.getWallets() != null ? updatedConsumer.getWallets().stream()
+                        .map(wallet -> wallet.getWalletId()).collect(Collectors.toList()) : List.of()
+        );
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteConsumer(@PathVariable String id) {
+        consumerService.deleteConsumer(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/by-wallet/{walletId}")
+    public List<ConsumerResponse> getConsumersByWalletId(@PathVariable String walletId) {
+        List<Consumer> consumers = consumerService.getConsumerByWalletId(walletId);
+
+        return consumers.stream()
+                .map(consumer -> new ConsumerResponse(
+                        consumer.getConsumerId(),
+                        consumer.getUamId(),
+                        consumer.getName(),
+                        consumer.getType(),
+                        consumer.getWallets().stream().map(wallet -> wallet.getWalletId())
+                                .collect(Collectors.toList())
+                ))
+                .collect(Collectors.toList());
+    }
+    @GetMapping("/by-payment/{paymentId}")
+    public List<ConsumerResponse> getConsumersByPaymentMeanId(@PathVariable String paymentId) {
+
+        List<Consumer> consumers = consumerService.getConsumerByPaymentMeanId(paymentId);
+
+        return consumers.stream()
+                .map(consumer -> new ConsumerResponse(
+                        consumer.getConsumerId(),
+                        consumer.getUamId(),
+                        consumer.getName(),
+                        consumer.getType(),
+                        consumer.getWallets().stream().map(wallet -> wallet.getWalletId())
+                                .collect(Collectors.toList())
+                ))
+                .collect(Collectors.toList());
+    }
 }
