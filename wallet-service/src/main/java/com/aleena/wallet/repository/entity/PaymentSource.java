@@ -14,13 +14,16 @@ import java.util.List;
 @Table(name="payment_source")
 public class PaymentSource {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private String paymentSourceId;
 
     private String iban;
 
     private String ibanAlias;
 
-    @OneToMany(mappedBy = "paymentSource", cascade = CascadeType.ALL)
-    private List<PaymentMeans> paymentMeans;
+//    @OneToMany(mappedBy = "paymentSource", cascade = CascadeType.ALL)
+//    private List<PaymentMeans> paymentMeans;
 
 }

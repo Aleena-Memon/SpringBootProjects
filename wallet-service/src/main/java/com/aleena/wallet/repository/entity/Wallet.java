@@ -1,30 +1,50 @@
 package com.aleena.wallet.repository.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
+import java.util.Objects;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+@ToString
+@Getter
+@Setter
 @Entity
 @Table(name="wallet")
 public class Wallet {
-    @Id
-    private String walletId;
 
-    @ManyToOne
-    @JoinColumn(name = "consumer_id", referencedColumnName = "consumerId")
-    private Consumer consumer;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", updatable = false, nullable = false)
+    private Long id;
+
+    private String extWalletId;
+//
+//    @ToString.Exclude
+//    @ManyToOne(optional = false)
+//    @JoinColumn(name = "consumer_id", nullable = false)
+//    private Consumer consumer;
 
     private String deviceId;
     private String appId;
 
-    @OneToMany(mappedBy = "wallet", cascade = CascadeType.ALL)
-    private List<PaymentMeans> paymentMeans;
+//    @OneToMany(mappedBy = "wallet", cascade = CascadeType.ALL)
+//    private List<PaymentMeans> paymentMeans;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Wallet that = (Wallet) o;
+        return id.equals(that.id);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }

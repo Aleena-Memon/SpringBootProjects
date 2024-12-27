@@ -16,19 +16,19 @@ public class WalletController {
 
     private WalletService walletService;
 
-    @GetMapping
-    public List<WalletResponse> getAllWallets() {
-        List<Wallet> wallets = walletService.getAllWallets();
-
-        return wallets.stream().map(wallet -> new WalletResponse(
-                wallet.getWalletId(),
-                wallet.getConsumer() != null ? wallet.getConsumer().getConsumerId() : null,
-                wallet.getDeviceId(),
-                wallet.getAppId(),
-                wallet.getPaymentMeans().stream()
-                        .map(paymentMean -> paymentMean.getPaymentMeanId())
-                        .collect(Collectors.toList())
-        )).collect(Collectors.toList());
-    }
+//    @GetMapping
+//    public List<WalletResponse> getAllWallets() {
+//        List<Wallet> wallets = walletService.getAllWallets();
+//
+//        return wallets.stream().map(wallet -> new WalletResponse(
+//                wallet.getWalletId(),
+//                wallet.getConsumer() != null ? wallet.getConsumer().getConsumerId() : null,
+//                wallet.getDeviceId(),
+//                wallet.getAppId(),
+//                wallet.getPaymentMeans().stream()
+//                        .map(paymentMean -> paymentMean.getPaymentMeanId())
+//                        .collect(Collectors.toList())
+//        )).collect(Collectors.toList());
+//    }
 
 }

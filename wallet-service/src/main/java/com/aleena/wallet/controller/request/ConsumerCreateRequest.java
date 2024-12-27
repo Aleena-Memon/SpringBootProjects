@@ -8,10 +8,12 @@ import java.util.List;
 
 
 @Data
-public class ConsumerRequest {
+public class ConsumerCreateRequest {
+
+    private String extConsumerId;
     private String uamId;
     private String name;
     private ConsumerType type;
-    private List<String> wallets;
+    private List<WalletCreateRequest> wallets;
 }
 
