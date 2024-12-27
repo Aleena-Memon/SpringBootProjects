@@ -23,11 +23,14 @@ public class ConsumerService {
 
     private final ConsumerRepository consumerRepository;
 
-
-    public List<Consumer> getAllConsumers() {
-        return consumerRepository.findAll();
+//     Fetch all consumers and return as a list of ConsumerCreateResponse.
+    public List<ConsumerCreateResponse> getAllConsumers() {
+        List<Consumer> consumers = consumerRepository.findAll();
+        return consumers.stream().map(this::convert)
+                .collect(Collectors.toList());
     }
 
+  //  Create a new consumer and return the response object.
     public ConsumerCreateResponse createConsumer(ConsumerCreateRequest request) {
         log.info("creating consumer: {}",request );
         final Consumer consumer = convert(request);
@@ -36,23 +39,19 @@ public class ConsumerService {
         return convert(savedConsumer);
     }
 
+    //Convert a ConsumerCreateRequest to a Consumer entity.
     private Consumer convert(ConsumerCreateRequest request) {
         Consumer consumer = new Consumer();
         consumer.setExtConsumerId(request.getExtConsumerId());
         consumer.setUamId(request.getUamId());
         consumer.setName(request.getName());
         consumer.setType(request.getType());
-//        consumer.setWallets(request.getWallets().stream().map(this::convert).collect(Collectors.toList()) );
+//       consumer.setWallets(request.getWallets().stream().map(this::convert).collect(Collectors.toList()) );
 
         return consumer;
     }
 
-    private ConsumerCreateResponse convert(Consumer consumer){
-        ConsumerCreateResponse createResponse = new ConsumerCreateResponse();
-        createResponse.setConsumerId(consumer.getId());
-        return createResponse;
-    }
-
+    //Convert a WalletCreateRequest to a Wallet entity.
     private Wallet convert(WalletCreateRequest request) {
         Wallet wallet = new Wallet();
         wallet.setExtWalletId(request.getExtWalletId());
@@ -60,6 +59,18 @@ public class ConsumerService {
         wallet.setDeviceId(request.getDeviceId());
         return wallet;
     }
+
+ //Convert a Consumer entity to a ConsumerCreateResponse.
+    private ConsumerCreateResponse convert(Consumer consumer){
+        ConsumerCreateResponse createResponse = new ConsumerCreateResponse();
+        createResponse.setConsumerId(consumer.getId());
+        createResponse.setUamId(consumer.getUamId());
+        createResponse.setName(consumer.getName());
+        createResponse.setType(consumer.getType());
+        //createResponse.setWallets(consumer.get);
+        return createResponse;
+    }
+
 
 
 //    public Consumer updateConsumer(Consumer consumer) {

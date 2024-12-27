@@ -18,23 +18,10 @@ public class ConsumerController {
     @Autowired
     private ConsumerService consumerService;
 
-//    @GetMapping
-//    public List<ConsumerCreateResponse> getAllConsumers() {
-//        List<Consumer> consumers = consumerService.getAllConsumers();
-//
-//        List<ConsumerCreateResponse> consumerResponses = consumers.stream()
-//                .map(consumer -> new ConsumerCreateResponse(
-////                        consumer.getConsumerId(),
-//                        consumer.getUamId(),
-//                        consumer.getName(),
-//                        consumer.getType(),
-//                        consumer.getWallets().stream().map(wallet -> wallet.getWalletId())
-//                                .collect(Collectors.toList())
-//                ))
-//                .collect(Collectors.toList());
-//
-//        return consumerResponses;
-//    }
+    @GetMapping
+    public List<ConsumerCreateResponse> getAllConsumers() {
+        return consumerService.getAllConsumers();
+    }
 
    @PostMapping
     public ResponseEntity<ConsumerCreateResponse> createConsumer(@RequestBody ConsumerCreateRequest consumerRequest){

@@ -10,8 +10,8 @@ import java.util.List;
 @Data
 public class ConsumerCreateResponse {
     private Long consumerId;
-//    private String uamId;
-//    private String name;
-//    private ConsumerType type;
+    private String uamId;
+    private String name;
+    private ConsumerType type;
 //    private List<String> wallets;
 }
